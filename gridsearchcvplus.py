@@ -45,8 +45,8 @@ class GridSearchCVPlus():
     attributes, by passing a ModelCalculation instance in model_calculations
     """
     
-    def __init__(self, estimator, param_grid, scoring='roc_auc', cv=3, shuffle=True,
-                 refit=True, return_train_score=True, model_calculations=None):
+    def __init__(self, estimator, param_grid, scoring='roc_auc',
+                 cv=3, shuffle=True, model_calculations=None):
         """Initialisation of grid search cross validation configuration, and parameters"""
         
         # GridSeachCV configuration
@@ -54,8 +54,6 @@ class GridSearchCVPlus():
         self.param_grid = param_grid
         self.n_splits = cv
         self.shuffle = shuffle
-        self.refit = refit
-        self.return_train_score = return_train_score
         self.random_state = self.estimator.random_state
         
         # Custom calculations
