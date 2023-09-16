@@ -3,7 +3,6 @@ from sklearn.model_selection import KFold
 from itertools import product
 
 
-
 class ModelCalculations():
     """
     Class that performs custom calculations from a model's attributes.
