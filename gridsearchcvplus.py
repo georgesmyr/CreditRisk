@@ -1,6 +1,10 @@
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import KFold
 from itertools import product
+import numpy as np
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import KFold, train_test_split
+
 
 
 class ModelCalculations():
