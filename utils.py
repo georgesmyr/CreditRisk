@@ -61,11 +61,13 @@ def stack_cv_results(scores, metrics):
 def plot_cv_results(df, metrics, model=None):
     """ Plot the score from the cross validation"""
     m = list(metrics.values())
+    palette = {"Train": "lightblue", "Test": "lightcoral"}
     g = sns.catplot(data=df,
                     x='Dataset', 
                     y='Value', 
                     hue='Dataset', 
                     col='Metric',
+                    palette=palette,
                     col_order=m,
                     order=['Train', 'Test'],
                     kind="box", 
@@ -74,16 +76,16 @@ def plot_cv_results(df, metrics, model=None):
                     height=4, aspect=1.2)
     
     df = df.groupby(['Metric', 'Dataset']).Value.mean().unstack().loc[m]
-    
     for i, ax in enumerate(g.axes.flat):
         s = f"Train: {df.loc[m[i], 'Train']:>7.4f}\nTest:  {df.loc[m[i], 'Test'] :>7.4f}"
         ax.text(0.75, 0.85, s, fontsize=10, transform=ax.transAxes, 
                 bbox=dict(facecolor='white', edgecolor='grey', boxstyle='round,pad=0.5'))
+        
     g.fig.suptitle(model, fontsize=16)
     g.fig.subplots_adjust(top=.9)
     
 
-def run_cross_validation(estimator, X, y, metrics, cv=3, model=None):
+def run_cross_validation(estimator, X, y, metrics, cv=3, verbose=False, model=None):
     """"""
     scores = cross_validate(estimator=estimator,
                             X=X, 
@@ -92,7 +94,7 @@ def run_cross_validation(estimator, X, y, metrics, cv=3, model=None):
                             cv=cv,
                             return_train_score=True,
                             n_jobs=-1,
-                            verbose=1)
+                            verbose=verbose)
     
     results = stack_cv_results(scores, metrics)
     plot_cv_results(results, metrics, model)
